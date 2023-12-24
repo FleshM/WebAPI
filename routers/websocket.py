@@ -29,7 +29,7 @@ websocket_manager = WebSocketManager()
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await websocket_manager.connect(websocket)
     await websocket_manager.broadcast({
-        "type": f"notification",
+        "type": f"message",
         "message": f"Пользователь {client_id} зашел на сайт",
         "time": f"{datetime.now()}"
     })
@@ -38,13 +38,13 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             data = await websocket.receive_text()
             await websocket_manager.broadcast({
                 "type": "message",
-                "message": f"Пользователь {client_id}: {data}",
+                "message": f"Пользователь {client_id} пишет: {data}",
                 "time": f"{datetime.now()}"
             })
     except WebSocketDisconnect:
         websocket_manager.disconnect(websocket)
         await websocket_manager.broadcast({
-            "type": "notification",
+            "type": "message",
             "message": f"Пользователь {client_id} покинул сайт",
             "time": f"{datetime.now()}"
         })

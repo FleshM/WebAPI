@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Контакты - Проект WebAPI</title>
+	<link rel="stylesheet" href="{{ url_for('static', path='/index.css') }}" type="text/css">
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<main>
+		<div class="container">
+			<h1 class="title">Контакты</h1>
+			<div class="wrapper">
+				<div class="groups"  id='groups'>
+				</div>
+				<div class="chat">
+					<h3 class="chat__title">Уведомления и чат</h3>
+					<div class="chat__messages" id='messages'>
+
+					</div>
+					<form class="chat__input" action="" onsubmit="sendMessage(event)">
+						<input class="" placeholder="Введите сообщение..." type="text" id="messageText" autocomplete="off" />
+						<button>Отправить</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</main>
+	<script>
+	async function getGroups() {
+		const groups = await fetch(`{{ server_url }}groups`).then(res => res.json())
+		const list = document.getElementById('groups');
+		list.innerHTML = '';
+		for (let group of groups) {
+			const groupTitle = document.createElement('h2');
+			groupTitle.classList.add('groups__title');
+			groupTitle.innerText = group.title;
+			list.appendChild(groupTitle);
+			if (group.contacts.length) {
+				for (let contact of group.contacts) {
+					const newContact = document.createElement('div');
+					newContact.classList.add('contact')
+					newContact.innerHTML = `
+						<p>${contact.name} ${contact.surname}</p>
+						<p>${contact.phone}</p>
+						<p>${contact.email}</p>
+						<button class="delete" onclick="deleteContact(${contact.id})">Удалить</button>
+					`
+					list.appendChild(newContact);
+				}
+			} else {
+				const notFound = document.createElement('p');
+				notFound.innerText = 'В этой группе еще нет контактов :(';
+				list.appendChild(notFound);
+			}
+			
+		}
+	}
+
+	let client_id = Math.floor(Math.random() * (new Date()).getTime() / 1e10);
+	let ws = new WebSocket(`{{ ws_protocol }}://{{ server_urn }}/ws/${client_id}`);
+	getGroups();
+
+	function appendMessage(msg) {
+		let messages = document.getElementById('messages')
+		let message = document.createElement('div')
+		message.classList.add(msg.type)
+		message.innerHTML = `
+			<p class='text'>${msg.message}</p>
+			<span class='time'>
+				${new Date(msg.time).toLocaleString()}
+			</span>
+		`
+		messages.appendChild(message)
+	}
+
+	ws.onmessage = function(event) {
+		const msg = JSON.parse(JSON.parse(event.data));
+		if (msg.type === 'notification') getGroups();
+		appendMessage(msg)
+	};
+
+	function sendMessage(event) {
+		let input = document.getElementById("messageText")
+		if (input.value.length > 0) {
+			ws.send(input.value)
+			input.value = ''
+		}
+		event.preventDefault()
+	}
+
+	async function deleteContact(id) {
+		let res = await fetch(`{{ server_url }}contacts/${id}`, {
+			method: 'DELETE'
+		});
+	}
+	</script>
+</body>
+
+</html>

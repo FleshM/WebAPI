@@ -41,6 +41,6 @@ def delete_group(db: Session, group_id: int):
     if db_group:
         db.delete(db_group)
         db.commit()
-        return True
-    return False
+        return db_group
+    return None
 

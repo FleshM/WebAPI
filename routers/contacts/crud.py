@@ -29,7 +29,7 @@ def update_contact(db: Session, contact_id: int, contact_data: schemas.ContactUp
 
     if db_contact:
         for key, value in contact_data.items():
-            if hasattr(db_contact, key):
+            if hasattr(db_contact, key) and not isinstance(value, type(None)):
                 setattr(db_contact, key, value)
 
         db.commit()
@@ -43,5 +43,5 @@ def delete_contact(db: Session, contact_id: int):
     if db_contact:
         db.delete(db_contact)
         db.commit()
-        return True
-    return False
+        return db_contact
+    return None

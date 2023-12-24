@@ -1,0 +1,179 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    background-color: #F9FBFE;
+
+    margin: 0;
+    overflow-x: hidden;
+}
+
+button {
+    cursor: pointer;
+    padding: 0;
+}
+
+button,
+input {
+    border: none;
+    background: none;
+    outline: none;
+    color: inherit;
+    font: inherit;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+}
+
+.container {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 10px
+}
+
+.title {
+    margin-top: 60px;
+    padding-left: 16px;
+    border-left: 6px solid #00E0FF;
+}
+
+.wrapper {
+    margin-top: 40px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.groups {
+    width: 100%;
+    max-width: 860px;
+}
+
+.groups__title {
+    font-size: 32px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+
+.groups__title:first-child {
+    margin-top: 0;
+}
+
+.contact {
+    font-weight: 500;
+    padding: 24px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.10);
+    margin-bottom: 12px;
+}
+
+.delete {
+    font-size: 10px;
+    padding: 6px 16px;
+    border: 1px solid red;
+    border-radius: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.delete:hover {
+    background-color: red;
+}
+
+.chat {
+    margin-top: 54px;
+    padding: 24px;
+    max-width: 460px;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.10);
+}
+
+.chat__title {
+    font-size: 24px;
+    padding-left: 16px;
+    border-left: 6px solid #00E0FF;
+    margin-bottom: 8px;
+}
+
+.chat__messages {
+    overflow-y: scroll;
+    height: 300px;
+}
+
+.notification {
+    border-radius: 16px;
+    margin: 8px 16px 0 0;
+    background-color: #E8E8E8;
+    padding: 12px;
+}
+
+.message {
+    border-radius: 16px;
+    margin: 8px 16px 0 0;
+    background-color: #00E0FF;
+    padding: 12px;
+}
+
+.chat__input {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 20px;
+    width: 100%;
+    padding: 16px;
+    border: 1px solid black;
+}
+
+.chat__input button {
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 6px 12px;
+    background-color: #00E0FF;
+}
+
+.chat__input input {
+    width: 100%;
+    padding-right: 10px;
+}
+
+.text {
+    font-weight: 500;
+}
+
+.time {
+    margin-top: 8px;
+}

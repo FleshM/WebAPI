@@ -1,12 +1,12 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 
 
 class ContactBase(BaseModel):
     name: str
-    surname: Optional[str] = None
+    surname: str
     phone: str
     email: str
     group_id: int

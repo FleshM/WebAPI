@@ -3,6 +3,8 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
+from routers.contacts.schemas import Contact
+
 
 class GroupBase(BaseModel):
     title: str
@@ -21,3 +23,4 @@ class Group(GroupBase):
 
     id: int
     last_update: datetime
+    contacts: list[Contact]
